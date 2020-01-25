@@ -1,0 +1,2 @@
+# POSIX-Threading
+I recently ran into a problem with locking pthreads in C when they are calling the same function, and was curious as to why mutexes were not activating. After learning that it was a computer architecture issue with how the OS efficiently runs its cores, I decided to explore other ways to lock a thread function. This is one such implementation which uses pthread ids and the pthread_self() API to manage thread executions when the code is too small for mutexes to take effect.
