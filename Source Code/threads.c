@@ -169,7 +169,7 @@ void* ThreadFunc (void *info_ptr)
     
     
     //Useful for testing the thread that is currently running
-    printf("Curent thread in function id = %ld\n", pthread_self());
+    //printf("Curent thread in function id = %ld\n", pthread_self());
     
 
 
