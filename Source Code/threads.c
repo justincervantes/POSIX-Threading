@@ -3,8 +3,7 @@
 --
 --      Functions:              main
 --                              ThreadFunc
---                              
---
+--    
 --      Date:                   January 23, 2020
 --
 --      Revisions:              (Date and Description)
@@ -141,27 +140,31 @@ void* ThreadFunc (void *info_ptr)
 
     
     while(UserInfo->producerThreadID == 0) {
-        printf("waiting for producer thread to update...\n");
+        printf("Waiting for producer thread to update...\n");
     }
 
     while(UserInfo->consumerThreadID == 0) {
-        printf("waiting for consumer thread to update...\n");
+        printf("Waiting for consumer thread to update...\n");
     }
 
 
     if (pthread_self() == UserInfo->producerThreadID) {
+        printf("Producer thread is now updating all values to: 'Producer's update', 1, 1.0\n");
         //pthread_mutex_lock(&printfLock);   
         UserInfo->structString = "Producer's Update";
         UserInfo->structInt = 1;
-        UserInfo->structDouble = 1.0;    
+        UserInfo->structDouble = 1.0;  
+        printf("Producer thread has finished updating all values\n");
+        fflush(stdout);
         UserInfo->publishCondition = true;
         //pthread_mutex_unlock(&printfLock);
     } else {
+
         //If the consumer is running, wait until the publish flag is turned on, then print it out!
         while(!UserInfo->publishCondition) {
-            printf("waiting for flag to turn on...\n");
+            printf("Waiting for the producer thread to flag that it has updated the struct for printing...\n");
         }
-        printf ("String: %s, Int: %d, Double: %lf\n", UserInfo->structString, UserInfo->structInt, UserInfo->structDouble);
+        printf ("Consumer is printing... String: %s, Int: %d, Double: %lf\n", UserInfo->structString, UserInfo->structInt, UserInfo->structDouble);
     }
     
     
